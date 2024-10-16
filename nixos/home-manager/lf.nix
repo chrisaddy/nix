@@ -33,6 +33,14 @@
       editor-open = ''
         $$EDITOR $f
       '';
+      open = ''
+        ''${{
+          case $(file --mime-type "$f" -b) in
+            application/pdf) zathura "$f" ;;
+            *) xdg-open "$f" ;;
+          esac
+        }}
+      '';
       mkdir = ''
         ''${{
             printf "directory name: "

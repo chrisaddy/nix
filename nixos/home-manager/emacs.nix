@@ -9,6 +9,9 @@
     pkgs.texliveFull
     pkgs.texlivePackages.dvisvgm
     pkgs.ghostscript
+    pkgs.rustfmt
+    pkgs.cargo
+    pkgs.rust-analyzer
 
     all-the-icons
     auto-package-update
@@ -39,10 +42,12 @@
     org-drill
     org-roam
     pdf-tools
+    org-pdftools
     python-mode
     rainbow-mode
     rustic
     vertico
+    vterm
   ];
 
   programs.emacs = {
@@ -183,7 +188,6 @@
       (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
       (global-set-key "\C-cl" 'org-store-link)
       (global-set-key "\C-ca" 'org-agenda)
-      (setq org-agenda-files '("~/notes" "~/projects/pocketsizefund/pocketsizefund"))
       (require 'org-habit)
       (add-to-list 'org-modules 'org-habit)
       (setq org-habit-graph-column 60)
@@ -252,6 +256,8 @@
               ((org-agenda-overriding-header "Cancelled Projects")
                (org-agenda-files org-agenda-files)))))))
 
+      (setq org-agenda-files (directory-files-recursively "~/notes" "\\.org$"))
+
       (define-key global-map (kbd "C-c j")
         (lambda () (interactive) (org-capture nil "jj")))
 
@@ -291,15 +297,21 @@
           (python . t)))
           (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
+      (with-eval-after-load 'org
+        (org-return-follows-link t))
+
       (use-package org-roam
         :custom
         (org-roam-directory (file-truename "~/notes"))
         :config
         (org-roam-db-autosync-mode))
+
         
       ;;(require 'org-roam-protocol)
 
       (use-package pdf-tools)
+      (use-package org-pdftools
+        :hook (org-mode . org-pdftools-setup-link))
 
       (use-package elfeed
         :config
@@ -520,6 +532,7 @@
           "gil"   'forge-topics-menu
           "gm"    'forge-dispatch
           "gprl"  'forge-list-pullreqs
+	  "hh"    'dashboard-open
           "nn"    'org-roam-node-insert
           "np"    'hyperprior/jump-to-psf-notes
           "ns"    'org-roam-node-find
@@ -605,10 +618,6 @@
         :custom
         (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-      (use-package forge
-        :config
-        (setq auth-sources '("~/.authinfo")))
-
       (use-package evil-commentary :config (evil-commentary-mode))
 
       (use-package vterm
@@ -667,12 +676,12 @@
         (interactive)
         (find-file "~/notes/brain-dump.org"))
 
-      ;(use-package gptel)
-      ;(use-package markdown-mode)
+      (use-package gptel)
+      (use-package markdown-mode)
 
-      ;(gptel-make-anthropic "Claude"
-      ;  :stream t
-      ; :key (getenv "ANTHROPIC_API_KEY"))
+      ;;(gptel-make-anthropic "Claude"
+      ;; :stream t
+      ;; :key (getenv "ANTHROPIC_API_KEY"))
 
       ;; Make gc pauses faster by decreasing the threshold.
       (setq gc-cons-threshold (* 2 1000 1000))
