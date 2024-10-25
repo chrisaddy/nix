@@ -19,4 +19,12 @@
       mouse = {hide-when-typing = "yes";};
     };
   };
+  programs.rio = {
+    enable = true;
+    settings = {
+      theme = "Dracula";
+    };
+  };
+
+  programs.tmate.enable = true;
 }

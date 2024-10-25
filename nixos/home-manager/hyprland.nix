@@ -60,13 +60,7 @@
 
       input = {
         kb_layout = "us";
-        # kb_variant =
-        # kb_model =
-        # kb_options = "caps:swapescape";
-        # kb_rules =
-
         follow_mouse = 1;
-
         touchpad = {
           natural_scroll = "no";
         };
@@ -105,12 +99,14 @@
       #
       bind = [
         "$mod, Return, exec, foot"
-        "$mod, A, exec, grim -g \"$(slurp)\" $HOME/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"
-        "$mod, B, exec, firefox"
+        "$mod, R, exec, rio"
+        "$mod, A, exec, griZ -g \"$(slurp)\" $HOME/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"
+        "$mod, B, exec, nyxt"
         "$mod, C, killactive,"
         "$mod, D, exec, discord"
         "$mod, E, exec, emacs"
-        "$mod, M, exit,"
+        "$mod, G, exec, google-chrome-stable"
+        "$mod, M, exec, wlogout"
         "$mod, V, togglefloating,"
         "$mod, F, exec, tofi-drun | xargs hyprctl dispatch exec --"
         "$mod, O, exec, obs"
@@ -119,8 +115,6 @@
         "$mod, J, movefocus, d"
         "$mod, K, movefocus, u"
         "$mod, L, movefocus, r"
-        "$mod CTRL, L, movetoworkspace, r+1"
-        "$mod CTRL, H, movetoworkspace, r-1"
         "$mod SHIFT, right, resizeactive, 10 0"
         "$mod SHIFT, left, resizeactive, -10 0"
         "$mod SHIFT, up, resizeactive, 0 -10"
@@ -155,14 +149,6 @@
         "$mod SHIFT, S, movetoworkspace, special:magic"
       ];
     };
-
-    #
-    #
-    # gestures {
-    #     # See https://wiki.hyprland.org/Configuring/Variables/ for more
-    #     workspace_swipe = off
-    # }
-    #
 
     #
     # # Example per-device config

@@ -14,6 +14,9 @@
       enable = true;
       userName = "chrisaddy";
       userEmail = "chris.william.addy@gmail.com";
+      # signing = {
+      #   signByDefault = true;
+      # };
     };
     gh = {
       enable = true;

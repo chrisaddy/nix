@@ -9,6 +9,7 @@
     ./hardware-configuration/aion.nix
     ./docker.nix
     ./networking.nix
+    ./peripherals.nix
     ./sound.nix
   ];
 
@@ -58,25 +59,34 @@
   # If you want to use JACK applications, uncomment this
   #jack.enable = true;
 
-  # use the example session manager (no others are packaged yet so this is enabled by default,
-  # no need to redefine it in your config for now)
-  #media-session.enable = true;
-  #};
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  security.sudo.extraRules = [
+    {
+      users = ["chrisaddy"];
+      commands = [
+        {
+          command = "ALL";
+          options = ["NOPASSWD"];
+        }
+      ];
+    }
+  ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.zsh.enable = true;
+
   users.users.chrisaddy = {
     isNormalUser = true;
     description = "chrisaddy";
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
     ];
-    shell = pkgs.nushell;
+    shell = pkgs.zsh;
   };
 
-  environment.shells = with pkgs; [nushell];
+  environment.shells = with pkgs; [
+    zsh
+  ];
 
   services.displayManager.autoLogin = {
     enable = true;
@@ -94,13 +104,13 @@
   };
 
   xdg.portal = {
-      enable = true;
-      extraPortals = [ 
-        pkgs.xdg-desktop-portal-gtk 
-        pkgs.xdg-desktop-portal-wlr 
-        pkgs.xdg-desktop-portal-hyprland
-      ];
-    };
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+  };
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -109,7 +119,6 @@
     XDG_SESSION_TYPE = "wayland";
   };
 
-
   programs.nh = {
     enable = true;
     clean.enable = true;
@@ -117,11 +126,10 @@
     # flake = "home/chrisaddy/.config/nixos";
   };
 
-
   environment.systemPackages = with pkgs; [
     vim
     wget
-    nushell
+    unzip
     obs-studio
     wlr-randr
     xdg-desktop-portal-wlr
@@ -129,6 +137,8 @@
     isync
     mu
     pinentry-curses
+    google-chrome
+    nyxt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -141,7 +151,6 @@
 
   # List services that you want to enable:
 
-
   fonts.packages = with pkgs; [
     noto-fonts
     fira-code
@@ -153,14 +162,14 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
       trusted-users = root chrisaddy
     '';
     settings = {
-      extra-substituters = [ "https://devenv.cachix.org" ];
-      extra-trusted-public-keys = [ "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" ];
+      extra-substituters = ["https://devenv.cachix.org"];
+      extra-trusted-public-keys = ["devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="];
     };
   };
   system.stateVersion = "24.05";

@@ -6,16 +6,17 @@
   ...
 }: {
   home.packages = with pkgs; [
-    nh
-    lf
     (writeShellScriptBin "clean-system" ''      sudo nix-collect-garbage --delete-older-than 15d --verbose nix store optimise --verbose
            nix store gc --verbose
     '')
 
     (writeShellScriptBin "update" ''
-      ${pkgs.alejandra}/bin/alejandra ${config.xdg.configHome}/nixos
+      pushd ${config.xdg.configHome}/nixos
+      ${pkgs.broot}/bin/broot
+      ${pkgs.alejandra}/bin/alejandra .
 
-      nh os switch --update ${config.xdg.configHome}/nixos/ --hostname aion
+
+      ${pkgs.nh}/bin/nh os switch --update . --hostname aion
       exec $SHELL
     '')
   ];

@@ -5,6 +5,5 @@
   inputs,
   ...
 }: {
-  home.packages = with pkgs; [
-  ];
+  programs.tmate.enable = true;
 }

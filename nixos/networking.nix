@@ -1,6 +1,9 @@
-{config, pkgs, inputs, ...}:
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     tailscale
   ];
@@ -11,7 +14,6 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMv2Rv0k3HjzMsispSYCSTnrR1mz76QaQ+0WDCco/0e"
   ];
 
-
   networking = {
     hostName = "aion";
     networkmanager.enable = true;
@@ -19,7 +21,7 @@
     # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
     firewall = {
       allowedTCPPorts = [
-        22   # ssh
+        22 # ssh
         8265 # ray cluster dashboard
       ];
     };

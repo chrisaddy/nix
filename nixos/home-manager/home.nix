@@ -6,24 +6,25 @@
   ...
 }: {
   imports = [
+    ./books.nix
     ./c.nix
     ./discord.nix
     ./emacs.nix
     ./email.nix
-    ./foot.nix
     ./git.nix
     ./go.nix
     ./k8s.nix
-    ./lf.nix
     ./nix.nix
     ./hyprland.nix
     ./hyprpaper.nix
     ./lua.nix
+    ./menu.nix
     ./notes.nix
     ./obs.nix
     ./python.nix
     ./shell.nix
     ./sound.nix
+    ./terminal.nix
     ./video.nix
     ./vim.nix
     ./waybar.nix
@@ -33,11 +34,12 @@
     homeDirectory = "/home/chrisaddy";
     stateVersion = "23.11";
     packages = with pkgs; [
-      dust
     ];
   };
 
-  programs.home-manager.enable = true;
+  programs.home-manager = {
+    enable = true;
+  };
   programs.ripgrep.enable = true;
 
   nix = {
