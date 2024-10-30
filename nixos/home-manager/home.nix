@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./books.nix
+    ./browser.nix
     ./c.nix
     ./discord.nix
     ./emacs.nix

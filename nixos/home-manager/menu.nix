@@ -17,7 +17,7 @@
       num-results = 10;
       font = "monospace";
       prompt-text = "/ ";
-      background-color = "#000AAA";
+      background-color = "#000A";
       text-color = "#81C8BE";
       selection-color = "#F4B8E4";
     };

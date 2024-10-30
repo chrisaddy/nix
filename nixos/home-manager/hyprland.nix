@@ -45,14 +45,12 @@
       # firefox Picture-in-Picture
       windowrule = [
         # "workspace 1 silent,firefox"
-        # "workspace 4 silent,postman"
         "center,^(task-floating)$"
         "float,^(task-floating)$"
         "dimaround,^(task-floating)$"
         "noborder,^(task-floating)$"
       ];
 
-      # layout = "dwindle";
       dwindle = {
         pseudotile = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
         preserve_split = "yes"; # you probably want this
@@ -100,21 +98,21 @@
       bind = [
         "$mod, Return, exec, foot"
         "$mod, R, exec, rio"
-        "$mod, A, exec, griZ -g \"$(slurp)\" $HOME/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"
+        "$mod, A, exec, griZ -g \"$(${pkgs.slurp}/bin/slurp)\" $HOME/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"
         "$mod, B, exec, nyxt"
         "$mod, C, killactive,"
         "$mod, D, exec, discord"
         "$mod, E, exec, emacs"
         "$mod, G, exec, google-chrome-stable"
-        "$mod, M, exec, wlogout"
-        "$mod, V, togglefloating,"
-        "$mod, F, exec, tofi-drun | xargs hyprctl dispatch exec --"
+        "$mod, M, exec, tofi-drun | xargs hyprctl dispatch exec --"
         "$mod, O, exec, obs"
         "$mod, P, pseudo, dwindle"
         "$mod, H, movefocus, l"
         "$mod, J, movefocus, d"
         "$mod, K, movefocus, u"
         "$mod, L, movefocus, r"
+        "$mod, Q, exec, wlogout"
+        "$mod, V, togglefloating,"
         "$mod SHIFT, right, resizeactive, 10 0"
         "$mod SHIFT, left, resizeactive, -10 0"
         "$mod SHIFT, up, resizeactive, 0 -10"

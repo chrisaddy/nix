@@ -4,13 +4,16 @@
   inputs,
   ...
 }: {
+  home.packages = with pkgs; [
+    font-awesome
+  ];
+
   programs.waybar = {
     enable = true;
     style = ''
       * {
           border: none;
           border-radius: 0;
-          /* `otf-font-awesome` is required to be installed for icons */
           font-family: Liberation Mono;
           min-height: 20px;
       }
@@ -27,7 +30,7 @@
           margin-right: 8px;
           border-radius: 10px;
           transition: none;
-          background: #383c4a;
+          background: transparent;
       }
 
       #workspaces button {
@@ -57,34 +60,7 @@
           color: white;
       }
 
-      #language {
-          padding-left: 16px;
-          padding-right: 8px;
-          border-radius: 10px 0px 0px 10px;
-          transition: none;
-          color: #ffffff;
-          background: #383c4a;
-      }
-
       #keyboard-state {
-          margin-right: 8px;
-          padding-right: 16px;
-          border-radius: 0px 10px 10px 0px;
-          transition: none;
-          color: #ffffff;
-          background: #383c4a;
-      }
-
-      #custom-pacman {
-          padding-left: 16px;
-          padding-right: 8px;
-          border-radius: 10px 0px 0px 10px;
-          transition: none;
-          color: #ffffff;
-          background: #383c4a;
-      }
-
-      #custom-mail {
           margin-right: 8px;
           padding-right: 16px;
           border-radius: 0px 10px 10px 0px;
@@ -99,7 +75,7 @@
           border-radius: 10px;
           transition: none;
           color: #ffffff;
-          background: #383c4a;
+          background: transparent;
       }
 
       #clock {
@@ -108,15 +84,7 @@
           border-radius: 10px 0px 0px 10px;
           transition: none;
           color: #ffffff;
-          background: #383c4a;
-      }
-
-      #custom-weather {
-          padding-right: 16px;
-          border-radius: 0px 10px 10px 0px;
-          transition: none;
-          color: #ffffff;
-          background: #383c4a;
+          background: transparent;
       }
 
       #pulseaudio {
@@ -126,22 +94,12 @@
           border-radius: 10px;
           transition: none;
           color: #ffffff;
-          background: #383c4a;
+          background: transparent;
       }
 
       #pulseaudio.muted {
           background-color: #90b1b1;
           color: #2a5c45;
-      }
-
-      #custom-mem {
-          margin-right: 8px;
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px;
-          transition: none;
-          color: #ffffff;
-          background: #383c4a;
       }
 
       #backlight {
@@ -151,7 +109,7 @@
           border-radius: 10px;
           transition: none;
           color: #ffffff;
-          background: #383c4a;
+          background: transparent;
       }
 
       #battery {
@@ -161,12 +119,12 @@
           border-radius: 10px;
           transition: none;
           color: #ffffff;
-          background: #383c4a;
+          background: transparent;
       }
 
       #battery.charging {
           color: #ffffff;
-          background-color: #26A65B;
+          background-color: transparent
       }
 
       #battery.warning:not(.charging) {
@@ -190,7 +148,7 @@
           border-radius: 10px;
           transition: none;
           color: #ffffff;
-          background: #383c4a;
+          background: transparent;
       }
 
       @keyframes blink {
@@ -209,31 +167,15 @@
         margin = "0 0 0 0";
         modules-left = [
           "sway/workspaces"
-          # "sway/language"
           "keyboard-state"
-          # "custom/pacman"
-          "custom/mail"
-          "sway/mode"
         ];
-        # modules-center = ["clock" "pulseaudio"];
         modules-center = ["clock" "custom/weather"];
         modules-right = [
           "pulseaudio"
-          "custom/mem"
-          "backlight"
           "battery"
           "tray"
         ];
 
-        "sway/workspaces" = {
-          disable-scroll = true;
-          persistent_workspaces = {
-            "1" = [];
-            "2" = [];
-            "3" = [];
-            "4" = [];
-          };
-        };
         clock = {
           timezone = "America/New_York";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
@@ -241,7 +183,6 @@
         };
       };
       pulseaudio = {
-        # "scroll-step": 1, // %, can be a float
         reverse-scrolling = 1;
         format = "{volume}% {icon} {format_source}";
         format-bluetooth = "{volume}% {icon} {format_source}";
