@@ -15,7 +15,7 @@
       ${pkgs.broot}/bin/broot
       ${pkgs.alejandra}/bin/alejandra .
 
-
+      sudo nix flake update
       ${pkgs.nh}/bin/nh os switch --update . --hostname aion
       exec $SHELL
     '')

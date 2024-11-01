@@ -36,15 +36,10 @@
         "move 100 100,class:(mpv),title:(mpv),float,size 10 10"
         "float,class:^(firefox)$,title:^(Picture-in-Picture)$"
         "pin,class:^(firefox)$,title:^(Picture-in-Picture)$"
-        #"fakefullscreen,class:^(firefox)$,title:^(Picture-in-Picture)$"
-        # firefox figma micro indicator
-        #"fakefullscreen,class:^(firefox)$,title:^(Firefox — Sharing Indicator)$"
         "float,class:^(firefox)$,title:^(Firefox — Sharing Indicator)$"
       ];
 
-      # firefox Picture-in-Picture
       windowrule = [
-        # "workspace 1 silent,firefox"
         "center,^(task-floating)$"
         "float,^(task-floating)$"
         "dimaround,^(task-floating)$"
@@ -82,7 +77,7 @@
         enabled = "yes";
         bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
         animation = [
-          "windows, 1, 7, myBezier"
+          "windows, 1, 7, myBezier, slidevert"
           "windowsOut, 1, 7, default, popin 80%"
           "border, 1, 10, default"
           "borderangle, 1, 8, default"
@@ -96,21 +91,27 @@
       # };
       #
       bind = [
+        # applications
         "$mod, Return, exec, foot"
-        "$mod, R, exec, rio"
         "$mod, A, exec, griZ -g \"$(${pkgs.slurp}/bin/slurp)\" $HOME/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"
         "$mod, B, exec, nyxt"
-        "$mod, C, killactive,"
         "$mod, D, exec, discord"
-        "$mod, E, exec, emacs"
+        "$mod, W, exec, emacs"
         "$mod, G, exec, google-chrome-stable"
-        "$mod, M, exec, tofi-drun | xargs hyprctl dispatch exec --"
+        "$mod, T, exec, tofi-drun | xargs hyprctl dispatch exec --"
         "$mod, O, exec, obs"
+        "$mod, Y, exec, freetube"
+        "$mod, C, killactive,"
+
+        # window navigation
+        "$mod, U, exec, movewindow, l"
+        "$mod, ,, "
+
         "$mod, P, pseudo, dwindle"
-        "$mod, H, movefocus, l"
-        "$mod, J, movefocus, d"
-        "$mod, K, movefocus, u"
-        "$mod, L, movefocus, r"
+        "$mod, M, movefocus, l"
+        "$mod, N, movefocus, d"
+        "$mod, E, movefocus, u"
+        "$mod, I, movefocus, r"
         "$mod, Q, exec, wlogout"
         "$mod, V, togglefloating,"
         "$mod SHIFT, right, resizeactive, 10 0"
@@ -155,13 +156,8 @@
     #     sensitivity = -0.5
     # }
     #
-    # # Example windowrule v1
-    # # windowrule = float, ^(kitty)$
-    # # Example windowrule v2
+
     # # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-    # # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-    #
-    #
     # # See https://wiki.hyprland.org/Configuring/Keywords/ for more
     #
     # # Switch workspaces with mainMod + [0-9]

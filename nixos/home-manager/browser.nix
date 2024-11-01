@@ -4,8 +4,8 @@
   inputs,
   ...
 }: {
-  programs.nyxt = {
-    enable = true;
-    configDir = "${config.xdg.configHome}/nyxt";
-  };
+  home.packages = with pkgs; [
+    nyxt
+    freetube
+  ];
 }
