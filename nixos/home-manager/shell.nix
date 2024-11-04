@@ -88,9 +88,6 @@
           shortcut = "v";
         }
       ];
-      # settings = {
-      #   "quit_on_last_cancel" = true;
-      # };
     };
     carapace = {
       enable = true;
@@ -129,9 +126,7 @@
     zsh = {
       enable = true;
       enableCompletion = true;
-      # autoSuggestions.enable = true;
       syntaxHighlighting.enable = true;
-      # autocd.enable = true;
       historySubstringSearch.enable = true;
       defaultKeymap = "vicmd";
       shellAliases = {
@@ -156,59 +151,14 @@
         tyrell = "$HOME/projects/pocketsizefund/tyrell";
         nixos = "$HOME/.config/nixos";
       };
-      # completonInit = {
-      #   autoload -Uz compinit && compinit
-      #   zinit cdreplay -q
-      #
-      # };
+       completonInit = {
+         autoload -Uz compinit && compinit
+         zinit cdreplay -q
+      
+      };
       initExtra = ''
 
       '';
     };
   };
 }
-# # Source/Load zinit
-# source "${ZINIT_HOME}/zinit.zsh"
-#
-# # Add in zsh plugins
-# zinit light zsh-users/zsh-syntax-highlighting
-# zinit light zsh-users/zsh-completions
-# zinit light zsh-users/zsh-autosuggestions
-# zinit light Aloxaf/fzf-tab
-# zinit light mfaerevaag/wd
-#
-# # Add in snippets
-# zinit snippet OMZP::git
-# zinit snippet OMZP::sudo
-# zinit snippet OMZP::archlinux
-# zinit snippet OMZP::kubectl
-# zinit snippet OMZP::kubectx
-# zinit snippet OMZP::command-not-found
-#
-# # Keybindings
-# bindkey -e
-# bindkey '^p' history-search-backward
-# bindkey '^n' history-search-forward
-# bindkey '^[w' kill-region
-#
-# # History
-# setopt hist_ignore_space
-#
-# # Completion styling
-# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-# zstyle ':completion:*' menu no
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-# # zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-#
-# # Shell integrations
-# eval "$(fzf --zsh)"
-# eval "$(zoxide init --cmd cd --hook pwd zsh)"
-#
-# export EDITOR=nvim
-#
-# zstyle ':completion:*' menu select
-# fpath+=~/.zfunc
-#
-# fpath+=~/.zfunc; autoload -Uz compinit; compinit
-

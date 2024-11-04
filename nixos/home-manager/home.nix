@@ -4,7 +4,10 @@
   username,
   inputs,
   ...
-}: {
+}: let
+  settings = import ./settings.nix;
+  user = settings.user;
+in {
   imports = [
     ./books.nix
     ./browser.nix
@@ -31,8 +34,8 @@
     ./waybar.nix
   ];
   home = {
-    username = "chrisaddy";
-    homeDirectory = "/home/chrisaddy";
+    username = user.name;
+    homeDirectory = "/home/${user.name}";
     stateVersion = "23.11";
     packages = with pkgs; [
     ];

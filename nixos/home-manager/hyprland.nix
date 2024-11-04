@@ -4,7 +4,10 @@
   username,
   inputs,
   ...
-}: {
+}: let
+  settings = import ./settings.nix;
+  colors = settings.colorscheme.hyprland;
+in {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
@@ -28,16 +31,9 @@
         gaps_in = "5";
         gaps_out = "20";
         border_size = "2";
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
+        "col.active_border" = "${colors.border.active} 45deg";
+        "col.inactive_border" = colors.border.inactive;
       };
-
-      windowrulev2 = [
-        "move 100 100,class:(mpv),title:(mpv),float,size 10 10"
-        "float,class:^(firefox)$,title:^(Picture-in-Picture)$"
-        "pin,class:^(firefox)$,title:^(Picture-in-Picture)$"
-        "float,class:^(firefox)$,title:^(Firefox — Sharing Indicator)$"
-      ];
 
       windowrule = [
         "center,^(task-floating)$"
@@ -47,8 +43,8 @@
       ];
 
       dwindle = {
-        pseudotile = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-        preserve_split = "yes"; # you probably want this
+        pseudotile = "yes";
+        preserve_split = "yes";
       };
 
       input = {
@@ -70,11 +66,11 @@
         drop_shadow = "yes";
         shadow_range = "4";
         shadow_render_power = "3";
-        "col.shadow" = "rgba(1a1a1aee)";
+        "col.shadow" = colors.col.shadow;
       };
 
       animations = {
-        enabled = "yes";
+        enabled = "no";
         bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
         animation = [
           "windows, 1, 7, myBezier, slidevert"
@@ -85,11 +81,11 @@
           "workspaces, 1, 6, default"
         ];
       };
-      # misc = {
-      #   force_default_wallpaper = "0";
-      #   disable_hyprland_logo = "yes";
-      # };
-      #
+      misc = {
+        force_default_wallpaper = "0";
+        disable_hyprland_logo = "yes";
+      };
+
       bind = [
         # applications
         "$mod, Return, exec, foot"
@@ -102,79 +98,38 @@
         "$mod, O, exec, obs"
         "$mod, Y, exec, freetube"
         "$mod, C, killactive,"
+        "$mod, Q, exec, wlogout"
 
         # window navigation
-        "$mod, U, exec, movewindow, l"
-        "$mod, ,, "
-
-        "$mod, P, pseudo, dwindle"
-        "$mod, M, movefocus, l"
-        "$mod, N, movefocus, d"
-        "$mod, E, movefocus, u"
-        "$mod, I, movefocus, r"
-        "$mod, Q, exec, wlogout"
-        "$mod, V, togglefloating,"
-        "$mod SHIFT, right, resizeactive, 10 0"
-        "$mod SHIFT, left, resizeactive, -10 0"
-        "$mod SHIFT, up, resizeactive, 0 -10"
-        "$mod SHIFT, down, resizeactive, 0 10"
-
-        "$mod CONTROL, right, movewindowpixel, 10 0"
-
-        # windows
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, 6, workspace, 6"
-        "$mod, 7, workspace, 7"
-        "$mod, 8, workspace, 8"
-        "$mod, 9, workspace, 9"
-        "$mod, 0, workspace, 10"
-
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
-        "$mod SHIFT, 0, movetoworkspace, 10"
+        "$mod, U, workspace, -1"
+        "$mod, comma, workspace, +1"
+        "$mod SHIFT, U, movetoworkspace, -1"
+        "$mod SHIFT, comma, movetoworkspace, +1"
 
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"
+
+        "$mod, P, pseudo, dwindle"
+
+        "$mod, M, movefocus, l"
+        "$mod SHIFT, M, resizeactive, -10 0"
+
+        "$mod, N, movefocus, d"
+        "$mod SHIFT, N, resizeactive, 0 10"
+
+        "$mod, E, movefocus, u"
+        "$mod SHIFT, E, resizeactive, 0 -10"
+
+        "$mod, I, movefocus, r"
+        "$mod SHIFT, I, resizeactive, 10 0"
+
+        "$mod, V, togglefloating,"
+
+        "$mod CONTROL, right, movewindowpixel, 10 0"
       ];
     };
 
-    #
-    # # Example per-device config
-    # # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-    # device:epic-mouse-v1 {
-    #     sensitivity = -0.5
-    # }
-    #
-
-    # # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-    # # See https://wiki.hyprland.org/Configuring/Keywords/ for more
-    #
-    # # Switch workspaces with mainMod + [0-9]
-    # # Move active window to a workspace with mainMod + SHIFT + [0-9]
-    #
-    # # Example special workspace (scratchpad)
-    #
-    # # Scroll through existing workspaces with mainMod + scroll
-    # bind = $mainMod, mouse_down, workspace, e+1
-    # bind = $mainMod, mouse_up, workspace, e-1
-    #
-    # # Move/resize windows with mainMod + LMB/RMB and dragging
-    # bindm = $mainMod, mouse:272, movewindow
-    # bindm = $mainMod, mouse:273, resizewindow
-    # };
     plugins = [
-      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
     ];
   };
 }

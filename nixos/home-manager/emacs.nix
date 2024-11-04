@@ -351,10 +351,10 @@
                     "od"    'org-drill-directory
                            "tt"    'org-todo
                            "wd"    'delete-window
-                           "wn"    'windmove-left
-                           "we"    'windmove-down
-                           "wu"    'windmove-up
-                           "wo"    'windmove-right
+                           "wm"    'windmove-left
+                           "wn"    'windmove-down
+                           "we"    'windmove-up
+                           "wi"    'windmove-right
                            "ws"    'split-window-below
                            "wv"    'split-window-right
                            ))

@@ -3,7 +3,10 @@
   pkgs,
   inputs,
   ...
-}: {
+}: let
+  settings = import ./settings.nix;
+  colors = settings.colorscheme;
+in {
   programs.tofi = {
     enable = true;
     settings = {
@@ -18,11 +21,10 @@
       font = "monospace";
       prompt-text = "/ ";
       background-color = "#000A";
-      text-color = "#81C8BE";
-      selection-color = "#F4B8E4";
+      text-color = colors.white;
+      selection-color = colors.magenta;
     };
   };
-
   programs.wlogout = {
     enable = true;
   };
