@@ -84,9 +84,14 @@
     shell = pkgs.zsh;
   };
 
-  environment.shells = with pkgs; [
-    zsh
-  ];
+  environment = {
+    shells = [pkgs.zsh];
+    variables = {
+      EDITOR = "nvim";
+      SYSTEMD_EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+  };
 
   services.displayManager.autoLogin = {
     enable = true;

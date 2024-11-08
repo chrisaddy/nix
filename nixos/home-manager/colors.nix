@@ -24,7 +24,7 @@
       comment = "#565f89";
       highlightHover = "#292e42";
       highlightActive = "#1e2030";
-      border = "#1d202f"
+      border = "#1d202f";
 
       hyprland = {
         border = {
@@ -33,23 +33,8 @@
         };
         col = {
           shadow = "rgba(1a1a1aee)";
+        };
       };
     };
-  };
-
-  lib = {
-    get = theme: colorName: theme.${colorName};
-    toCssVars = theme:
-      builtins.mapAttrs (
-        name: value: "--${name}: ${value};"
-      )
-      theme;
-
-    toHyprlandColors = theme: ''
-      general {
-          col.active_border = rgb(${theme.primary})
-          col.inactive_border = rgb(${theme.border})
-      }
-    '';
   };
 }

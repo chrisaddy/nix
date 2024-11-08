@@ -151,11 +151,6 @@
         tyrell = "$HOME/projects/pocketsizefund/tyrell";
         nixos = "$HOME/.config/nixos";
       };
-       completonInit = {
-         autoload -Uz compinit && compinit
-         zinit cdreplay -q
-      
-      };
       initExtra = ''
 
       '';

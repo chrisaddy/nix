@@ -60,15 +60,6 @@
           color: white;
       }
 
-      #keyboard-state {
-          margin-right: 8px;
-          padding-right: 16px;
-          border-radius: 0px 10px 10px 0px;
-          transition: none;
-          color: #ffffff;
-          background: #383c4a;
-      }
-
       #mode {
           padding-left: 16px;
           padding-right: 16px;
@@ -85,21 +76,6 @@
           transition: none;
           color: #ffffff;
           background: transparent;
-      }
-
-      #pulseaudio {
-          margin-right: 8px;
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px;
-          transition: none;
-          color: #ffffff;
-          background: transparent;
-      }
-
-      #pulseaudio.muted {
-          background-color: #90b1b1;
-          color: #2a5c45;
       }
 
       #backlight {
@@ -166,12 +142,10 @@
         width = 1280;
         margin = "0 0 0 0";
         modules-left = [
-          "sway/workspaces"
-          "keyboard-state"
+          "worspaces"
         ];
-        modules-center = ["clock" "custom/weather"];
+        modules-center = ["clock"];
         modules-right = [
-          "pulseaudio"
           "battery"
           "tray"
         ];
