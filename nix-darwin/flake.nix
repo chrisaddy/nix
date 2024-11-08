@@ -5,46 +5,58 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay/da2f552d133497abd434006e0cae996c0a282394";
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, emacs-overlay, nixvim }:
   let
+    pkgs = import nixpkgs {
+      overlays = [self.inputs.emacs-overlay];
+    };
     configuration = { pkgs, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [ pkgs.vim
         ];
 
-      # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
-      # nix.package = pkgs.nix;
-
-      # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
-
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
-
-      # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
       system.stateVersion = 5;
-
-      # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
+
+  users.users.chrisaddy = {
+    name = "chrisaddy";
+    home = "/Users/chrisaddy";
+  };
     };
   in
   {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#chrisaddys-MacBook-Air
-    darwinConfigurations."chrisaddys-MacBook-Air" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+    # $ darwin-rebuild build --flake .#io
+    darwinConfigurations."io" = nix-darwin.lib.darwinSystem {
+      modules = [ 
+       configuration 
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.chrisaddy = {...}: {
+              imports = [
+                ./home.nix
+                nixvim.homeManagerModules.nixvim
+              ];
+            };
+        }
+      ];
     };
 
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."chrisaddys-MacBook-Air".pkgs;
+    darwinPackages = self.darwinConfigurations."io".pkgs;
   };
 }
