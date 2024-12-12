@@ -39,18 +39,18 @@
     enable = true;
     settings = {
       default_session.command = ''
-             ${pkgs.greetd.tuigreet}/bin/tuigreet \
-        --time \
-        --asterisks \
-        --user-menu \
-        --cmd Hyprland
+                    ${pkgs.greetd.tuigreet}/bin/tuigreet \
+               --time \
+               --asterisks \
+        --remember \
+               --user-menu \
+        --cmd sway
       '';
     };
   };
 
   services.printing.enable = false;
 
-  # security.rtkit.enable = true;
   # services.pipewire = {
   #   enable = true;
   #   alsa.enable = true;
@@ -59,29 +59,34 @@
   # If you want to use JACK applications, uncomment this
   #jack.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-  security.sudo.extraRules = [
-    {
-      users = ["chrisaddy"];
-      commands = [
-        {
-          command = "ALL";
-          options = ["NOPASSWD"];
-        }
-      ];
-    }
-  ];
+  security = {
+    sudo.extraRules = [
+      {
+        users = ["chrisaddy"];
+        commands = [
+          {
+            command = "ALL";
+            options = ["NOPASSWD"];
+          }
+        ];
+      }
+    ];
+    polkit = {
+      enable = true;
+    };
+  };
 
   programs.zsh.enable = true;
 
-  users.users.chrisaddy = {
-    isNormalUser = true;
-    description = "chrisaddy";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-    ];
-    shell = pkgs.zsh;
+  users.users = {
+    chrisaddy = {
+      isNormalUser = true;
+      description = "chrisaddy";
+      extraGroups = ["networkmanager" "wheel"];
+      packages = with pkgs; [
+      ];
+      shell = pkgs.zsh;
+    };
   };
 
   environment = {
@@ -91,6 +96,33 @@
       SYSTEMD_EDITOR = "nvim";
       VISUAL = "nvim";
     };
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      XCURSOR_SIZE = "24";
+
+      XDG_SESSION_TYPE = "wayland";
+      XDG_CURRENT_DESKTOP = "sway";
+      XDG_SESSION_DESKTOP = "sway";
+      QT_QPA_PLATFORM = "wayland";
+      QT_DISABLE_WINDOWDECORATION = "1";
+      GDK_BACKEND = "wayland";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+    };
+
+    systemPackages = with pkgs; [
+      vim
+      wget
+      unzip
+      obs-studio
+      wlr-randr
+      xdg-desktop-portal-wlr
+      xwaylandvideobridge
+      isync
+      mu
+      pinentry-curses
+      google-chrome
+      nyxt
+    ];
   };
 
   services.displayManager.autoLogin = {
@@ -117,34 +149,12 @@
     ];
   };
 
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    XDG_CURRENT_DESKTOP = "Hyprland";
-    XDG_SESSION_DESKTOP = "Hyprland";
-    XDG_SESSION_TYPE = "wayland";
-  };
-
   programs.nh = {
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
     # flake = "home/chrisaddy/.config/nixos";
   };
-
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    unzip
-    obs-studio
-    wlr-randr
-    xdg-desktop-portal-wlr
-    xwaylandvideobridge
-    isync
-    mu
-    pinentry-curses
-    google-chrome
-    nyxt
-  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -161,7 +171,7 @@
     fira-code
     noto-fonts-emoji
     fira-code-symbols
-    nerdfonts
+    # nerdfonts
   ];
 
   nixpkgs.config.allowUnfree = true;

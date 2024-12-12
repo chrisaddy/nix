@@ -39,6 +39,56 @@
       lualine = {
         enable = true;
       };
+      neotest = {
+        enable = true;
+        settings = {
+          log_level = "error";
+          output = {
+            enable = true;
+            open_on_run = true;
+          };
+          quickfix = {
+            enable = true;
+          };
+          discovery = {
+            enable = true;
+          };
+          consumers = {
+          };
+        };
+      };
+
+      # return {
+      #   'nvim-neotest/neotest',
+      #   dependencies = {
+      #     'nvim-neotest/nvim-nio',
+      #     'nvim-lua/plenary.nvim',
+      #     'antoinemadec/FixCursorHold.nvim',
+      #     'nvim-neotest/neotest-python',
+      #     'nvim-neotest/neotest-plenary',
+      #   },
+      #   config = function()
+      #     require('neotest').setup {
+      #       consumers = {
+      #         require 'neotest-plenary',
+      #       },
+      #       adapters = {
+      #         require 'neotest-python',
+      #         require 'neotest-plenary',
+      #       },
+      #     }
+      #   end,
+      # }
+
+      neo-tree = {
+        enable = true;
+        enableDiagnostics = true;
+        enableGitStatus = true;
+        enableModifiedMarkers = true;
+        enableRefreshOnWrite = true;
+        autoCleanAfterSessionRestore = true;
+        gitStatusAsync = true;
+      };
       nvim-autopairs = {
         enable = true;
       };
@@ -80,6 +130,9 @@
       telescope = {
         enable = true;
       };
+      treesitter = {
+        enable = true;
+      };
       undotree = {
         enable = true;
         settings = {
@@ -119,19 +172,19 @@
       {
         mode = "n";
         key = "<leader>ut";
-        action = "<cmd>UndoTreeToggle<CR>";
+        action = "<cmd>UndoTreeToggle<cr>";
         options = {
           silent = true;
-          desc = "undo tree";
+          desc = "[u]ndo [t]ree";
         };
       }
       {
         mode = "n";
         key = "<leader>o";
-        action = "<cmd>Oil<CR>";
+        action = "<cmd>Oil<cr>";
         options = {
           silent = true;
-          desc = "oil";
+          desc = "[o]il";
         };
       }
       {
@@ -154,37 +207,55 @@
       {
         mode = "n";
         key = "<leader>gil";
-        action = "<cmd>Octo issue list<CR>";
+        action = "<cmd>Octo issue list<cr>";
         options = {
           silent = true;
-          desc = "[g]it Issue List";
+          desc = "[g]it [i]ssue [l]ist";
         };
       }
       {
         mode = "n";
         key = "<leader>gic";
-        action = "<cmd>Octo issue create<CR>";
+        action = "<cmd>Octo issue create<cr>";
         options = {
           silent = true;
-          desc = "[g]it Issue Create";
+          desc = "[g]it [i]ssue [c]reate";
         };
       }
       {
         mode = "n";
         key = "<leader>gpl";
-        action = "<cmd>Octo pr list<CR>";
+        action = "<cmd>Octo pr list<cr>";
         options = {
           silent = true;
-          desc = "[g]it PR List";
+          desc = "[g]it [p]r list";
         };
       }
       {
         mode = "n";
         key = "<leader>gpc";
-        action = "<cmd>Octo pr create<CR>";
+        action = "<cmd>Octo pr create<cr>";
         options = {
           silent = true;
-          desc = "[g]it PR Create";
+          desc = "[g]it [p]r [c]reate";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>rt";
+        action = "<cmd>Neotest run<cr>";
+        options = {
+          silent = true;
+          desc = "[r]un [t]ests";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>tt";
+        action = "<cmd>Neotree toggle<cr>";
+        options = {
+          silent = true;
+          desc = "[t]oggle [t]ree";
         };
       }
     ];

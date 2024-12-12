@@ -20,7 +20,8 @@ in {
     ./k8s.nix
     ./nix.nix
     ./hyprland.nix
-    ./hyprpaper.nix
+    #./hyprpaper.nix
+    ./learning.nix
     ./lua.nix
     ./menu.nix
     ./notes.nix
@@ -28,6 +29,7 @@ in {
     ./python.nix
     ./shell.nix
     ./sound.nix
+    ./sway.nix
     ./terminal.nix
     ./video.nix
     ./vim.nix

@@ -5,6 +5,22 @@
   inputs,
   ...
 }: {
+  programs.thunderbird = {
+    enable = true;
+    profiles.default = {
+      isDefault = true;
+      settings = {
+        "mail.keyboard.custom_keys" = true;
+        # Gmail-style shortcuts
+        "mail.keyboard.custom.key_delete" = "#";
+        "mail.keyboard.custom.key_archive" = "e";
+        "mail.keyboard.custom.key_reply" = "r";
+        "mail.keyboard.custom.key_replyall" = "a";
+        "mail.keyboard.custom.key_forward" = "f";
+        "mail.keyboard.custom.key_markAsJunk" = "!";
+      };
+    };
+  };
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
   programs.notmuch = {
@@ -56,7 +72,6 @@
     };
   };
 
-  # Ensure necessary packages are installed
   home.packages = with pkgs; [
     notmuch
     isync # for mbsync

@@ -32,8 +32,6 @@
         docker-compose-mode
         doom-modeline
         doom-themes
-        elfeed
-        elfeed-org
         org
         evil
         evil-collection
@@ -308,17 +306,6 @@
 
 
 
-                       (use-package elfeed)
-                       (use-package elfeed-org)
-                       (elfeed-org)
-
-                       (setq rmh-elfeed-org-files (list "~/.config/elfeed.org"))
-
-                       (defun elfeed-update-and-show ()
-                         (interactive)
-                         (elfeed)
-                         (elfeed-search-fetch nil))
-
                        (use-package evil-leader
                          :config
                          (global-evil-leader-mode)
@@ -336,7 +323,6 @@
                            "da"    'direnv-update-environment
                            "fc"    'hyperprior/jump-to-config
                            "ff"    'find-file
-                           "fn"    'elfeed-update-and-show
                            "fp"    'project-switch-project
                     "fs"    'save-buffer
                            "gil"   'forge-topics-menu
@@ -478,20 +464,7 @@
                       ; (org-startup-with-latex-preview t)
                        ;(org-format-latex-options :scale 2.0)
 
-                      (require 'elfeed)
-                    (defalias 'elfeed-toggle-star
-                    (elfeed-expose #'elfeed-search-toggle-all 'star))
 
-                    (eval-after-load 'elfeed-search
-                    '(define-key elfeed-search-mode-map (kbd "s") 'elfeed-toggle-star))
-
-                    ;; face for starred articles with yellow highlighting
-                    (defface elfeed-search-star-title-face
-                    '((t :foreground "#000000"
-                        :background "#ffeb3b"))
-                    "Marks a starred Elfeed entry with yellow highlighting.")
-
-                    (push '(star elfeed-search-star-title-face) elfeed-search-face-alist)
             (org-babel-do-load-languages
              'org-babel-load-languages
              '((lisp . t)))

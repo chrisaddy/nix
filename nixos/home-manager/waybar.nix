@@ -11,128 +11,18 @@
   programs.waybar = {
     enable = true;
     style = ''
-      * {
-          border: none;
-          border-radius: 0;
-          font-family: Liberation Mono;
-          min-height: 20px;
-      }
-
-      window#waybar {
-          background: transparent;
-      }
-
-      window#waybar.hidden {
-          opacity: 0.2;
-      }
-
-      #workspaces {
-          margin-right: 8px;
-          border-radius: 10px;
-          transition: none;
-          background: transparent;
-      }
-
-      #workspaces button {
-          transition: none;
-          color: #7c818c;
-          background: transparent;
-          padding: 5px;
-          font-size: 18px;
-      }
-
-      #workspaces button.persistent {
-          color: #7c818c;
-          font-size: 12px;
-      }
-
-      /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-      #workspaces button:hover {
-          transition: none;
-          box-shadow: inherit;
-          text-shadow: inherit;
-          border-radius: inherit;
-          color: #383c4a;
-          background: #7c818c;
-      }
-
-      #workspaces button.focused {
-          color: white;
-      }
-
-      #mode {
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px;
-          transition: none;
-          color: #ffffff;
-          background: transparent;
-      }
-
-      #clock {
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px 0px 0px 10px;
-          transition: none;
-          color: #ffffff;
-          background: transparent;
-      }
-
-      #backlight {
-          margin-right: 8px;
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px;
-          transition: none;
-          color: #ffffff;
-          background: transparent;
-      }
-
-      #battery {
-          margin-right: 8px;
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px;
-          transition: none;
-          color: #ffffff;
-          background: transparent;
-      }
-
-      #battery.charging {
-          color: #ffffff;
-          background-color: transparent
-      }
-
-      #battery.warning:not(.charging) {
-          background-color: #ffbe61;
-          color: black;
-      }
-
-      #battery.critical:not(.charging) {
-          background-color: #f53c3c;
-          color: #ffffff;
-          animation-name: blink;
-          animation-duration: 0.5s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
-      }
-
-      #tray {
-          padding-left: 16px;
-          padding-right: 16px;
-          border-radius: 10px;
-          transition: none;
-          color: #ffffff;
-          background: transparent;
-      }
-
-      @keyframes blink {
-          to {
-              background-color: #ffffff;
-              color: #000000;
-          }
-      }
+         * {
+             font-size: 20px;
+             font-family: monospace;
+             color: #fdf6e3;
+      margin-top: 0;
+         }
+         window#waybar {
+           background-color: transparent;
+         }
+         #workspaces button.focused {
+           background: rgba(180, 180, 180, 0.5);
+         }
     '';
     settings = {
       mainBar = {
@@ -142,13 +32,17 @@
         width = 1280;
         margin = "0 0 0 0";
         modules-left = [
-          "worspaces"
+          "sway/workspaces"
         ];
         modules-center = ["clock"];
         modules-right = [
           "battery"
           "tray"
         ];
+        "sway/workspaces" = {
+          disable-scroll = true;
+          format = "{name}";
+        };
 
         clock = {
           timezone = "America/New_York";
@@ -175,6 +69,10 @@
         };
         on-click = "pavucontrol";
         min-length = 13;
+      };
+      cpu = {
+        interval = 5;
+        format = "cpu {usage:2}%";
       };
     };
   };

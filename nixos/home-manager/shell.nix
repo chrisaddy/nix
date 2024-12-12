@@ -128,7 +128,6 @@
       enableCompletion = true;
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
-      defaultKeymap = "vicmd";
       shellAliases = {
         vi = "nvim";
         vim = "nvim";

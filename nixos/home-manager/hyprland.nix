@@ -27,7 +27,7 @@ in {
       monitor = ",preferred,auto,auto";
 
       general = {
-        allow_tearing = false;
+        allow_tearing = true;
         gaps_in = "5";
         gaps_out = "20";
         border_size = "2";
@@ -63,10 +63,10 @@ in {
           size = "3";
           passes = "1";
         };
-        drop_shadow = "yes";
-        shadow_range = "4";
-        shadow_render_power = "3";
-        "col.shadow" = colors.col.shadow;
+        # drop_shadow = "yes";
+        # shadow_range = "4";
+        # shadow_render_power = "3";
+        # "col.shadow" = colors.col.shadow;
       };
 
       animations = {

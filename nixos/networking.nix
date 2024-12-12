@@ -9,7 +9,17 @@
   ];
 
   services.tailscale.enable = true;
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [22];
+    settings = {
+      PasswordAuthentication = true;
+      AllowUsers = null;
+      UseDns = true;
+      X11Forwarding = false;
+      PermitRootLogin = "prohibit-password";
+    };
+  };
   users.users.chrisaddy.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMv2Rv0k3HjzMsispSYCSTnrR1mz76QaQ+0WDCco/0e"
   ];
