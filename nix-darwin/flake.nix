@@ -26,7 +26,6 @@
     self,
     nix-darwin,
     nixpkgs,
-    nixpkgs-stable,
     home-manager,
     emacs-overlay,
     nixvim,
@@ -36,13 +35,12 @@
       inherit system;
       overlays = [
         emacs-overlay.overlay
-        (final: prev: {
-          stable = import nixpkgs-stable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-        })
       ];
+      config = {
+        allowUnfree = true;
+        allowUnsupportedSystem = true;
+        allowBroken = true;
+      };
     };
   in {
     darwinConfigurations."io" = nix-darwin.lib.darwinSystem {
@@ -51,13 +49,15 @@
         ./configuration.nix
         home-manager.darwinModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.chrisaddy = {...}: {
-            imports = [
-              ./home.nix
-              nixvim.homeManagerModules.nixvim
-            ];
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.chrisaddy = {...}: {
+              imports = [
+                ./home.nix
+                nixvim.homeManagerModules.nixvim
+              ];
+            };
           };
         }
       ];

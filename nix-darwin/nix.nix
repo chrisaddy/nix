@@ -13,9 +13,7 @@
       ${pkgs.broot}/bin/broot
       ${pkgs.alejandra}/bin/alejandra .
 
-      sudo nix flake update
-      darwin-rebuild switch --flake ~/.config/nix-darwin
-      exec $SHELL
+      ./update.sh
     '')
   ];
 }

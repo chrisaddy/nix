@@ -472,6 +472,8 @@
        'org-babel-load-languages
        '((python . t)))
 
+    (setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
+    (setq vterm-always-compile-module t)
     '';
   };
 }

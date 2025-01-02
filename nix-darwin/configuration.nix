@@ -1,11 +1,21 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }: {
-  environment.systemPackages = [
-    pkgs.neovim
+  imports = [
+    ./window-manager.nix
   ];
+
+  environment.systemPackages = with pkgs; [
+    neovim
+    ghostty
+  ];
+
+  environment.variables = {
+    PATH = "$PATH:$HOME/.cargo/bin";
+  };
 
   services.nix-daemon.enable = true;
   nix.settings.experimental-features = "nix-command flakes";
@@ -28,6 +38,8 @@
     EDITOR = "vim";
     VISUAL = "vim";
   };
+
+  fonts.packages = [] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
   users.users.chrisaddy = {
     name = "chrisaddy";
